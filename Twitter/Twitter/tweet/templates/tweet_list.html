@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %} tweet {% endblock title %}
+
+{%block content %}
+<h1 class="text-center mt-4">Welcome to Twitter Type Django Project</h1>
+<h3>{{user}}</h3>
+
+<a class="btn btn-primary mt-4" href="{% url 'tweet_create' %}">Create a tweeet</a>
+
+<div class="container row gap-3">
+    {% for tweet in tweets %}
+        <div class="card mt-4" style="width: 18rem;">
+            {% if tweet.photo %}
+                <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet image">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ tweet.user.username }}</h5>
+                <p class="card-text">{{ tweet.text }}</p>
+                                   
+                {% if tweet.user == user %}
+                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-danger">Edit</a>
+                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-primary">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}
